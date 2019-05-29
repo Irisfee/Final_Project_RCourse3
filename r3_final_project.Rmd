@@ -42,7 +42,7 @@ d1_raw <- d1 %>% #Created a new variable, pid, based on row number
          age = q348) %>% 
   mutate(age = (age + 15)) %>% 
   select(-7) #Omits gender_text column
-
+## Yufei: (Stength 1) The renaming makes the table very easy to understand!
 d2_raw <- d2 %>%
   mutate(pid = (row_number() + 437), 
          group = 2) %>% 
@@ -156,6 +156,8 @@ Below we've included a long, roundabout way to (1) select the demographic variab
 #   mutate(scale = "tsc") %>% 
 #   select(1:7, 10, 8:9)
 
+
+## Yufei: (strength 2) having this redundant way at first and then introducing the function method is really a good strategy to convince people that writing functions is super helpful
 ```
 Below we have written a function to extract demographic info, a function to extract responses to the TSC, and (most importantly!) a function to recode the responses to subtract a one from each response. Importantly, the two former functions assume that the next version of this questionnaire has the same number of questions in the same order. Assuming this is indeed the case, functions to isolate questions of interest could be helpful to extract items from similar data sets.   
 ```{r tsc_new}
@@ -176,6 +178,7 @@ subtract1 <- function(df) {
   map(df, ~(.x-1), na.rm = TRUE)
 }
 
+## Yufei: (strength 3) these example functions are very straightforward to understand. they are really good examples for people who start to learn writing functions
 ```
 Notice that we gave the functions above meaningful names that are easily interpretable. The argument for each function is the dataframe to which the function should be applied. [Here, for tutorial purposes, spend some time explaining map] If you're following along, you'll see that the functions we just defined are now listed in the global environment. Now let's see these newly minted functions at work:
 ```{r}
@@ -254,4 +257,8 @@ map_dbl(by_gender$data, ~mean(.x$age))
 #Or other descriptives:
 map_dbl(by_gender$data, ~min(.x$q65_1), na.rm = TRUE)
 map_dbl(by_gender$data, ~max(.x$q65_1), na.rm = TRUE) #Note from KH: I need to figure out why min and max is yielding "NA" for gender category 2.
+
+## Yufei: (improvement) maybe you can generate a table to present the descriptives? It might be easier to read.
+
+## Yufei: (one thing I learned) This introduction set up a great example for how to use the real research data to teach r. By reading the codes I learned how to make clear explanation to pragramming step by step.
 ```
